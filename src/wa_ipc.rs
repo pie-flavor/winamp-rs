@@ -41,10 +41,8 @@ pub const IPC_PLAYFILE: UINT = 100;
 pub const IPC_ENQUEUEFILE: UINT = 100;
 pub const IPC_PLAYFILEW: UINT = 1100;
 pub const IPC_ENQUEUEFILEW: UINT = 1100;
-
 pub const IPC_DELETE: UINT = 101;
 pub const IPC_DELETE_INT: UINT = 1101;
-
 pub const IPC_STARTPLAY: UINT = 102;
 pub const IPC_STARTPLAY_INT: UINT = 1102;
 pub const IPC_IPC_CHDIR: UINT = 103;
@@ -101,17 +99,11 @@ pub const IPC_GETHTTPGETTERW: UINT = 1240;
 pub const IPC_MBOPEN: UINT = 241;
 pub const IPC_CHANGECURRENTFILE: UINT = 245;
 pub const IPC_CHANGECURRENTFILEW: UINT = 1245;
-
 pub const IPC_GETMBURL: UINT = 246;
-
 pub const IPC_MBBLOCK: UINT = 248;
-
 pub const IPC_MBOPENREAL: UINT = 249;
-
 pub const IPC_ADJUST_OPTIONSMENUPOS: UINT = 280;
-
 pub const IPC_GET_HMENU: UINT = 281;
-
 pub const IPC_GET_EXTENDED_FILE_INFO: UINT = 290;
 pub const IPC_GET_EXTENDED_FILE_INFO_HOOKABLE: UINT = 296;
 
@@ -125,6 +117,7 @@ pub struct extendedFileInfoStruct {
 }
 
 pub const IPC_GET_BASIC_FILE_INFO: UINT = 291;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct basicFileInfoStruct {
@@ -136,6 +129,7 @@ pub struct basicFileInfoStruct {
 }
 
 pub const IPC_GET_BASIC_FILE_INFOW: UINT = 1291;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct basicFileInfoStructW {
@@ -148,6 +142,7 @@ pub struct basicFileInfoStructW {
 pub const IPC_GET_EXTLIST: UINT = 292;
 pub const IPC_GET_EXTLISTW: UINT = 1292;
 pub const IPC_INFOBOX: UINT = 293;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct infoBoxParam {
@@ -158,6 +153,7 @@ pub struct infoBoxParam {
 pub const IPC_SET_EXTENDED_FILE_INFO: UINT = 294;
 pub const IPC_WRITE_EXTENDED_FILE_INFO: UINT = 295;
 pub const IPC_FORMAT_TITLE: UINT = 297;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waFormatTitle {
@@ -168,7 +164,9 @@ pub struct waFormatTitle {
     pub TAGFUNC: unsafe extern "C" fn(tag: *const c_char, p: *mut c_void) -> *mut c_char,
     pub TAGFREEFUNC: unsafe extern "C" fn(tag: *mut c_char, p: *mut c_void),
 }
+
 pub const IPC_FORMAT_TITLE_EXTENDED: UINT = 298;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waFormatTitleExtended {
@@ -183,19 +181,23 @@ pub struct waFormatTitleExtended {
 }
 
 pub const IPC_COPY_EXTENDED_FILE_INFO: UINT = 299;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct copyFileInfoStruct {
     pub source: *const c_char,
     pub dest: *const c_char,
 }
+
 pub const IPC_COPY_EXTENDED_FILE_INFOW: UINT = 1299;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct copyFileInfoStructW {
     pub source: *const wchar_t,
     pub dest: *const wchar_t,
 }
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct wa_inflate_struct {
@@ -235,47 +237,29 @@ pub struct prefsDlgRecW {
     pub _id: intptr_t,
     pub next: *mut prefsDlgRec,
 }
+
 pub const IPC_ADD_PREFS_DLG: UINT = 332;
 pub const IPC_ADD_PREFS_DLGW: UINT = 1332;
 pub const IPC_REMOVE_PREFS_DLG: UINT = 333;
-
 pub const IPC_OPENPREFSTOPAGE: UINT = 380;
-
 pub const IPC_GETINIFILE: UINT = 334;
-
 pub const IPC_GETINIDIRECTORY: UINT = 335;
-
 pub const IPC_GETPLUGINDIRECTORY: UINT = 336;
-
 pub const IPC_GETM3UDIRECTORY: UINT = 337;
-
 pub const IPC_GETM3UDIRECTORYW: UINT = 338;
-
 pub const IPC_SPAWNBUTTONPOPUP: UINT = 361;
-
 pub const IPC_OPENURLBOX: UINT = 360;
-
 pub const IPC_OPENFILEBOX: UINT = 362;
-
 pub const IPC_OPENDIRBOX: UINT = 363;
-
 pub const IPC_SETDIALOGBOXPARENT: UINT = 364;
-
 pub const IPC_GETDIALOGBOXPARENT: UINT = 365;
-
 pub const IPC_UPDATEDIALOGBOXPARENT: UINT = 366;
-
 pub const IPC_DRO_MIN: UINT = 401;
 pub const IPC_SET_JTF_COMPARATOR: UINT = 409;
-
 pub const IPC_SET_JTF_COMPARATOR_W: UINT = 410;
-
 pub const IPC_SET_JTF_DRAWTEXT: UINT = 416;
-
 pub const IPC_DRO_MAX: UINT = 499;
-
 pub const IPC_GET_GENSKINBITMAP: UINT = 503;
-
 pub const EMBED_FLAGS_NORESIZE: c_int = 0x1;
 pub const EMBED_FLAGS_NOTRANSPARENCY: c_int = 0x2;
 pub const EMBED_FLAGS_NOWINDOWMENU: c_int = 0x4;
@@ -346,6 +330,7 @@ pub struct __SKINWINDOWPARAM {
 }
 
 pub const IPC_EMBED_ENUM: UINT = 532;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct embedEnumStruct {
@@ -356,6 +341,7 @@ pub struct embedEnumStruct {
 
 pub const IPC_EMBED_ISVALID: UINT = 533;
 pub const IPC_CONVERTFILE: UINT = 506;
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct convertFileStruct {
@@ -370,6 +356,7 @@ pub struct convertFileStruct {
     pub killswitch: c_int,
     pub extra_data: [intptr_t; 64],
 }
+
 impl Debug for convertFileStruct {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         let &Self {
@@ -457,6 +444,7 @@ impl PartialEq for convertFileStruct {
 impl Eq for convertFileStruct {}
 
 pub const IPC_CONVERTFILEW: UINT = 515;
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct convertFileStructW {
@@ -561,6 +549,7 @@ impl PartialEq for convertFileStructW {
 mod dbg {
     use libc::*;
     use winapi::shared::windef::*;
+
     #[derive(Debug, PartialEq)]
     pub(crate) struct convertFileStructW<'a> {
         pub sourcefile: *mut wchar_t,
@@ -574,6 +563,7 @@ mod dbg {
         pub killswitch: c_int,
         pub extra_data: &'a [intptr_t],
     }
+
     #[derive(Debug, PartialEq)]
     pub(crate) struct convertFileStruct<'a> {
         pub sourcefile: *mut c_char,
@@ -588,8 +578,10 @@ mod dbg {
         pub extra_data: &'a [intptr_t],
     }
 }
+
 pub const IPC_CONVERTFILE_END: UINT = 507;
 pub const IPC_CONVERTFILEW_END: UINT = 516;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertConfigStruct {
@@ -601,12 +593,14 @@ pub struct convertConfigStruct {
 
 pub const IPC_CONVERT_CONFIG: UINT = 508;
 pub const IPC_CONVERT_CONFIG_END: UINT = 509;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct converterEnumFmtStruct {
     pub enumProc: unsafe extern "C" fn(user_data: intptr_t, desc: *const c_char, fourcc: c_int),
     pub user_data: intptr_t,
 }
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct burnCDStruct {
@@ -615,21 +609,27 @@ pub struct burnCDStruct {
     pub callback_hwnd: HWND,
     pub error: *mut c_char,
 }
+
 pub const IPC_BURN_CD: UINT = 511;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertSetPriority {
     pub cfs: *mut convertFileStruct,
     pub priority: c_int,
 }
+
 pub const IPC_CONVERT_SET_PRIORITY: UINT = 512;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertsetPriorityW {
     pub cfs: *mut convertFileStructW,
     pub priority: c_int,
 }
+
 pub const IPC_CONVERT_SET_PRIORITYW: UINT = 517;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertConfigItem {
@@ -642,6 +642,7 @@ pub struct convertConfigItem {
 
 pub const IPC_CONVERT_CONFIG_SET_ITEM: UINT = 513;
 pub const IPC_CONVERT_CONFIG_GET_ITEM: UINT = 514;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waHookTitleStruct {
@@ -652,6 +653,7 @@ pub struct waHookTitleStruct {
 }
 
 pub const IPC_HOOK_TITLES: UINT = 850;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waHookTitleStructW {
@@ -662,11 +664,8 @@ pub struct waHookTitleStructW {
 }
 
 pub const IPC_HOOK_TITLESW: UINT = 851;
-
 pub const IPC_GETSADATAFUNC: UINT = 800;
-
 pub const IPC_GETVUDATAFUNC: UINT = 801;
-
 pub const IPC_ISMAINWNDVISIBLE: UINT = 900;
 
 #[repr(C)]
@@ -678,6 +677,7 @@ pub struct waSetPlColorsStruct {
 }
 
 pub const IPC_SETPLEDITCOLORS: UINT = 920;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waSpawnMenuParms {
@@ -685,6 +685,7 @@ pub struct waSpawnMenuParms {
     pub xpos: c_int,
     pub ypos: c_int,
 }
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waSpawnMenuParms2 {
@@ -694,6 +695,7 @@ pub struct waSpawnMenuParms2 {
     pub width: c_int,
     pub height: c_int,
 }
+
 pub const IPC_SPAWNEQPRESETMENU: UINT = 933;
 pub const IPC_SPAWNFILEMENU: UINT = 934;
 pub const IPC_SPAWNOPTIONSMENU: UINT = 935;
@@ -709,11 +711,10 @@ pub const IPC_SPAWNMLVIEWMENU: UINT = 944;
 pub const IPC_SPAWNMLHELPMENU: UINT = 945;
 pub const IPC_SPAWNPELISTOFPLAYLISTS: UINT = 946;
 pub const WM_WA_SYSTRAY: UINT = WM_USER + 1;
-
 pub const WM_WA_MPEG_EOF: UINT = WM_USER + 2;
-
 pub const IPC_IS_PLAYING_VIDEO: UINT = 501;
 pub const IPC_GET_IVIDEOOUTPUT: UINT = 500;
+
 #[inline(always)]
 pub fn VIDEO_MAKETYPE(a: u32, b: u32, c: u32, d: u32) -> u32 {
     a | (b << 8) | (c << 16) | (d << 24)
@@ -743,12 +744,9 @@ pub const IPC_CB_WND_PE: UINT = 1;
 pub const IPC_CB_WND_MB: UINT = 2;
 pub const IPC_CB_WND_VIDEO: UINT = 3;
 pub const IPC_CB_WND_MAIN: UINT = 4;
-
 pub const IPC_CB_ONSHOWWND: UINT = 600;
 pub const IPC_CB_ONHIDEWND: UINT = 601;
-
 pub const IPC_CB_GETTOOLTIP: UINT = 602;
-
 pub const IPC_CB_MISC: UINT = 603;
 pub const IPC_CB_MISC_TITLE: UINT = 0;
 pub const IPC_CB_MISC_VOLUME: UINT = 1;
@@ -757,37 +755,24 @@ pub const IPC_CB_MISC_EQ: UINT = 3;
 pub const IPC_CB_MISC_INFO: UINT = 4;
 pub const IPC_CB_MISC_VIDEOINFO: UINT = 5;
 pub const IPC_CB_MISC_TITLE_RATING: UINT = 6;
-
 pub const IPC_CB_CONVERT_STATUS: UINT = 604;
 pub const IPC_CB_CONVERT_DONE: UINT = 605;
-
 pub const IPC_ADJUST_FFWINDOWSMENUPOS: UINT = 606;
-
 pub const IPC_ISDOUBLESIZE: UINT = 608;
-
 pub const IPC_ADJUST_FFOPTIONSMENUPOS: UINT = 609;
-
 pub const IPC_GETTIMEDISPLAYMODE: UINT = 610;
-
 pub const IPC_SETVISWND: UINT = 611;
-
 pub const ID_VIS_NEXT: UINT = 40382;
 pub const ID_VIS_PREV: UINT = 40383;
 pub const ID_VIS_RANDOM: UINT = 40384;
 pub const ID_VIS_FS: UINT = 40389;
 pub const ID_VIS_CFG: UINT = 40390;
 pub const ID_VIS_MENU: UINT = 40391;
-
 pub const IPC_GETVISWND: UINT = 612;
-
 pub const IPC_ISVISRUNNING: UINT = 613;
-
 pub const IPC_CB_VISRANDOM: UINT = 628;
-
 pub const IPC_SETIDEALVIDEOSIZE: UINT = 614;
-
 pub const IPC_GETSTOPONVIDEOCLOSE: UINT = 615;
-
 pub const IPC_SETSTOPONVIDEOCLOSE: UINT = 616;
 
 #[repr(C)]
@@ -800,6 +785,7 @@ pub struct transAccelStruct {
 }
 
 pub const IPC_TRANSLATEACCELERATOR: UINT = 617;
+
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct windowCommand {
@@ -810,146 +796,87 @@ pub struct windowCommand {
 }
 
 pub const IPC_CB_ONTOGGLEAOT: UINT = 618;
-
 pub const IPC_GETPREFSWND: UINT = 619;
-
 pub const IPC_SET_PE_WIDTHHEIGHT: UINT = 620;
-
 pub const IPC_GETLANGUAGEPACKINSTANCE: UINT = 621;
-
 pub const LANG_IDENT_STR: UINT = 0;
 pub const LANG_LANG_CODE: UINT = 1;
 pub const LANG_COUNTRY_CODE: UINT = 2;
-
 pub const IPC_CB_PEINFOTEXT: UINT = 622;
-
 pub const IPC_CB_OUTPUTCHANGED: UINT = 623;
-
 pub const IPC_GETOUTPUTPLUGIN: UINT = 625;
-
 pub const IPC_SETDRAWBORDERS: UINT = 626;
-
 pub const IPC_DISABLESKINCURSORS: UINT = 627;
-
 pub const IPC_GETSKINCURSORS: UINT = 628;
-
 pub const IPC_CB_RESETFONT: UINT = 629;
-
 pub const IPC_IS_FULLSCREEN: UINT = 630;
-
 pub const IPC_SET_VIS_FS_FLAG: UINT = 631;
-
 pub const IPC_SHOW_NOTIFICATION: UINT = 632;
-
 pub const IPC_GETSKININFO: UINT = 633;
 pub const IPC_GETSKININFOW: UINT = 1633;
-
 pub const IPC_GET_MANUALPLADVANCE: UINT = 634;
-
 pub const IPC_SET_MANUALPLADVANCE: UINT = 635;
-
 pub const IPC_GET_NEXT_PLITEM: UINT = 636;
-
 pub const IPC_GET_PREVIOUS_PLITEM: UINT = 637;
-
 pub const IPC_IS_WNDSHADE: UINT = 638;
-
 pub const IPC_SETRATING: UINT = 639;
-
 pub const IPC_GETRATING: UINT = 640;
-
 pub const IPC_GETNUMAUDIOTRACKS: UINT = 641;
-
 pub const IPC_GETNUMVIDEOTRACKS: UINT = 642;
-
 pub const IPC_GETAUDIOTRACK: UINT = 643;
-
 pub const IPC_GETVIDEOTRACK: UINT = 644;
-
 pub const IPC_SETAUDIOTRACK: UINT = 645;
-
 pub const IPC_SETVIDEOTRACK: UINT = 646;
-
 pub const IPC_PUSH_DISABLE_EXIT: UINT = 647;
-
 pub const IPC_POP_DISABLE_EXIT: UINT = 648;
-
 pub const IPC_IS_EXIT_ENABLED: UINT = 649;
-
 pub const IPC_IS_AOT: UINT = 650;
-
 pub const IPC_USES_RECYCLEBIN: UINT = 651;
-
 pub const IPC_FLUSHAUDITS: UINT = 652;
-
 pub const IPC_GETPLAYITEM_START: UINT = 653;
 pub const IPC_GETPLAYITEM_END: UINT = 654;
-
 pub const IPC_GETVIDEORESIZE: UINT = 655;
 pub const IPC_SETVIDEORESIZE: UINT = 656;
-
 pub const IPC_INITIAL_SHOW_STATE: UINT = 657;
-
 pub const IPC_PLCMD: UINT = 1000;
-
 pub const PLCMD_ADD: UINT = 0;
 pub const PLCMD_REM: UINT = 1;
 pub const PLCMD_SEL: UINT = 2;
 pub const PLCMD_MISC: UINT = 3;
 pub const PLCMD_LIST: UINT = 4;
-
 pub const MBCMD_BACK: UINT = 0;
 pub const MBCMD_FORWARD: UINT = 1;
 pub const MBCMD_STOP: UINT = 2;
 pub const MBCMD_RELOAD: UINT = 3;
 pub const MBCMD_MISC: UINT = 4;
-
 pub const IPC_VIDCMD: UINT = 1002;
-
 pub const VIDCMD_FULLSCREEN: UINT = 0;
 pub const VIDCMD_1X: UINT = 1;
 pub const VIDCMD_2X: UINT = 2;
 pub const VIDCMD_LIB: UINT = 3;
 pub const VIDPOPUP_MISC: UINT = 4;
-
 pub const IPC_STATS_LIBRARY_ITEMCNT: UINT = 1300;
-
 pub const IPC_FF_FIRST: UINT = 2000;
 pub const IPC_FF_COLOURTHEME_CHANGE: UINT = IPC_FF_ONCOLORTHEMECHANGED;
 pub const IPC_FF_ONCOLORTHEMECHANGED: UINT = IPC_FF_FIRST + 3;
 pub const IPC_FF_ISMAINWND: UINT = IPC_FF_FIRST + 4;
 pub const IPC_FF_GETCONTENTWND: UINT = IPC_FF_FIRST + 5;
 pub const IPC_FF_NOTIFYHOTKEY: UINT = IPC_FF_FIRST + 6;
-
 pub const IPC_FF_LAST: UINT = 3000;
-
 pub const IPC_GETDROPTARGET: UINT = 3001;
-
 pub const IPC_PLAYLIST_MODIFIED: UINT = 3002;
-
 pub const IPC_PLAYING_FILE: UINT = 3003;
-
 pub const IPC_PLAYING_FILEW: UINT = 13003;
-
 pub const IPC_FILE_TAG_MAY_HAVE_UPDATED: UINT = 3004;
 pub const IPC_FILE_TAG_MAY_HAVE_UPDATEDW: UINT = 3005;
-
 pub const IPC_ALLOW_PLAYTRACKING: UINT = 3007;
-
 pub const IPC_HOOK_OKTOQUIT: UINT = 3010;
-
 pub const IPC_WRITECONFIG: UINT = 3011;
-
 pub const IPC_UPDATE_URL: UINT = 3012;
-
 pub const IPC_GET_RANDFUNC: UINT = 3015;
-
 pub const IPC_METADATA_CHANGED: UINT = 3017;
-
 pub const IPC_SKIN_CHANGED: UINT = 3018;
-
 pub const IPC_REGISTER_LOWORD_COMMAND: UINT = 3019;
-
 pub const IPC_GET_DISPATCH_OBJECT: UINT = 3020;
 pub const IPC_GET_UNIQUE_DISPATCH_ID: UINT = 3021;
 pub const IPC_ADD_DISPATCH_OBJECT: UINT = 3022;
@@ -962,9 +889,7 @@ pub struct DispatchInfo {
     pub id: DWORD,
 }
 pub const IPC_GET_PROXY_STRING: UINT = 3023;
-
 pub const IPC_USE_REGISTRY: UINT = 3024;
-
 pub const IPC_GET_API_SERVICE: UINT = 3025;
 
 #[repr(C)]
@@ -977,26 +902,16 @@ pub struct extendedFileInfoStructW {
 }
 
 pub const IPC_GET_EXTENDED_FILE_INFOW: UINT = 3026;
-
 pub const IPC_GET_EXTENDED_FILE_INFOW_HOOKABLE: UINT = 3027;
 pub const IPC_SET_EXTENDED_FILE_INFOW: UINT = 3028;
-
 pub const IPC_PLAYLIST_GET_NEXT_SELECTED: UINT = 3029;
-
 pub const IPC_PLAYLIST_GET_SELECTED_COUNT: UINT = 3030;
-
 pub const IPC_GET_PLAYING_FILENAME: UINT = 3031;
-
 pub const IPC_OPEN_URL: UINT = 3032;
-
 pub const IPC_USE_UXTHEME_FUNC: UINT = 3033;
-
 pub const IPC_ISWINTHEMEPRESENT: UINT = 0;
-
 pub const IPC_ISAEROCOMPOSITIONACTIVE: UINT = 1;
-
 pub const IPC_GET_PLAYING_TITLE: UINT = 3034;
-
 pub const IPC_CANPLAY: UINT = 3035;
 
 #[repr(C)]
@@ -1017,7 +932,5 @@ pub struct artFetchData {
 }
 
 pub const IPC_FETCH_ALBUMART: UINT = 3036;
-
 pub const IPC_JSAPI2_GET_DISPATCH_OBJECT: UINT = 3037;
-
 pub const IPC_REGISTER_WINAMP_IPCMESSAGE: UINT = 65536;

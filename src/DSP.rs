@@ -35,5 +35,4 @@ pub type winampDSPGetHeaderType = unsafe extern "C" fn(HWND) -> *mut winampDSPHe
 
 pub const DSP_PLUGIN_UNINSTALL_NOW: c_int = 0x0;
 pub const DSP_PLUGIN_UNINSTALL_REBOOT: c_int = 0x1;
-
 pub const DSP_HDRVER: c_int = 0x20;
