@@ -1,7 +1,7 @@
-use libc::{c_char, c_double, c_int, c_uchar, c_uint, c_ulong, c_void, intptr_t, size_t, wchar_t};
+use libc::*;
 use winapi::shared::guiddef::GUID;
-use winapi::shared::minwindef::{DWORD, HINSTANCE, LPARAM, LRESULT, UINT, WPARAM};
-use winapi::shared::windef::{HBITMAP, HWND, RECT};
+use winapi::shared::minwindef::*;
+use winapi::shared::windef::*;
 use winapi::um::winuser::{SendMessageW, WM_USER};
 
 pub const WM_WA_IPC: UINT = WM_USER;
@@ -450,7 +450,7 @@ pub const IPC_IS_PLAYING_VIDEO: UINT = 501;
 pub const IPC_GET_IVIDEOOUTPUT: UINT = 500;
 #[inline(always)]
 pub fn VIDEO_MAKETYPE(a: u32, b: u32, c: u32, d: u32) -> u32 {
-    A | (B << 8) | (C << 16) | (D << 24)
+    a | (b << 8) | (c << 16) | (d << 24)
 }
 
 pub const VIDUSER_SET_INFOSTRING: UINT = 0x1000;

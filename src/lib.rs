@@ -17,3 +17,9 @@ pub struct GeneralPurposePlugin {
 }
 
 pub mod wa_ipc;
+pub mod ipc_pe;
+pub mod wa_dlg;
+pub mod DSP;
+pub mod GEN;
+pub mod IN2;
+pub mod OUT;
