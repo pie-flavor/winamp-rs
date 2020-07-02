@@ -1,9 +1,10 @@
 use libc::*;
-use winapi::shared::{windef::*, minwindef::*};
+use winapi::shared::{minwindef::*, windef::*};
 
 pub const OUT_VER: c_int = 0x10;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Out_Module {
     pub version: c_int,
     pub description: *mut c_char,
@@ -14,7 +15,13 @@ pub struct Out_Module {
     pub About: unsafe extern "C" fn(hwndParent: HWND),
     pub Init: unsafe extern "C" fn(),
     pub Quit: unsafe extern "C" fn(),
-    pub Open: unsafe extern "C" fn(samplerate: c_int, numchannels: c_int, bitspersamp: c_int, bufferlenms: c_int, prebufferms: c_int) -> c_int,
+    pub Open: unsafe extern "C" fn(
+        samplerate: c_int,
+        numchannels: c_int,
+        bitspersamp: c_int,
+        bufferlenms: c_int,
+        prebufferms: c_int,
+    ) -> c_int,
     pub Close: unsafe extern "C" fn(),
     pub Write: unsafe extern "C" fn(buf: *mut c_char, len: c_int) -> c_int,
     pub CanWrite: unsafe extern "C" fn() -> c_int,

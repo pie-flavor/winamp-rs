@@ -1,11 +1,12 @@
-use winapi::shared::windef::*;
-use winapi::shared::minwindef::*;
 use libc::*;
+use winapi::shared::minwindef::*;
+use winapi::shared::windef::*;
 
 pub const DCW_SUNKENBORDER: UINT = 0x00010000;
 pub const DCW_DIVIDER: UINT = 0x00020000;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum WADLG {
     ITEMBG,
     ITEMFG,
@@ -31,19 +32,20 @@ pub enum WADLG {
     INACT_SELBAR_BGCOLOR,
     ITEMBG2,
     ITEMFG2,
-    NUM_COLORS
+    NUM_COLORS,
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum WACURSOR {
     VOLUME = 0,
     POSITION = 1,
-    BTN_WINSHADE = 2,	// winshade
-    BTN_MINIMIZE = 3,	// minimize
-    BTN_CLOSE = 4,		// close
-    MENU = 	5,			// main menu
-    TITLEBAR = 6,		// title bar
-    SONGNAME = 7,		
+    BTN_WINSHADE = 2, // winshade
+    BTN_MINIMIZE = 3, // minimize
+    BTN_CLOSE = 4,    // close
+    MENU = 5,         // main menu
+    TITLEBAR = 6,     // title bar
+    SONGNAME = 7,
     NORMAL = 8,
     WINSHADE_BTN_WINSHADE = 9,
     WINSHADE_BTN_MINIMIZE = 10,
@@ -73,7 +75,12 @@ extern "C" {
     pub fn WADlg_getColor(idx: c_int) -> c_int;
     pub fn WADlg_initted() -> c_int;
 
-    pub fn WADlg_handleDialogMsgs(hwndDlg: HWND, uMsg: UINT, wParam: WPARAM, lParam: LPARAM) -> LRESULT;
+    pub fn WADlg_handleDialogMsgs(
+        hwndDlg: HWND,
+        uMsg: UINT,
+        wParam: WPARAM,
+        lParam: LPARAM,
+    ) -> LRESULT;
     pub fn WADlg_DrawChildWindowBorders(hwndDl: HWND, tab: *mut c_int, tabsize: c_int);
     pub fn WADlg_getBitmap() -> HBITMAP;
 }

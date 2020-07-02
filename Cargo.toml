@@ -8,4 +8,12 @@ edition = "2018"
 
 [dependencies]
 libc = "0.2.71"
-winapi = { version = "0.3.9", features = ["minwindef", "windef", "winuser", "guiddef"] }
+winapi = { version = "0.3.9", features = ["minwindef", "windef", "winuser", "guiddef", "debug"] }
+
+[features]
+dsp = []
+gen = []
+in = []
+ipc-pe = []
+out = []
+wa-dlg = []

@@ -1,4 +1,5 @@
 use libc::*;
+use std::fmt::{Debug, Formatter, Result as FmtResult};
 use winapi::shared::guiddef::GUID;
 use winapi::shared::minwindef::*;
 use winapi::shared::windef::*;
@@ -21,6 +22,7 @@ pub const IPC_GETVERSIONSTRING: UINT = 1;
 pub const IPC_GETREGISTEREDVERSION: UINT = 770;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct enqueueFileWithMetaStruct {
     pub filename: *mut c_char,
     pub title: *mut c_char,
@@ -28,6 +30,7 @@ pub struct enqueueFileWithMetaStruct {
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct enqueueFileWithMetaStructW {
     pub filename: *mut wchar_t,
     pub title: *mut wchar_t,
@@ -113,6 +116,7 @@ pub const IPC_GET_EXTENDED_FILE_INFO: UINT = 290;
 pub const IPC_GET_EXTENDED_FILE_INFO_HOOKABLE: UINT = 296;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct extendedFileInfoStruct {
     pub filename: *mut c_char,
     pub metadata: *mut c_char,
@@ -122,6 +126,7 @@ pub struct extendedFileInfoStruct {
 
 pub const IPC_GET_BASIC_FILE_INFO: UINT = 291;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct basicFileInfoStruct {
     pub filename: *mut c_char,
     pub quickCheck: c_int,
@@ -132,6 +137,7 @@ pub struct basicFileInfoStruct {
 
 pub const IPC_GET_BASIC_FILE_INFOW: UINT = 1291;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct basicFileInfoStructW {
     pub filename: *mut wchar_t,
     pub quickCheck: c_int,
@@ -143,6 +149,7 @@ pub const IPC_GET_EXTLIST: UINT = 292;
 pub const IPC_GET_EXTLISTW: UINT = 1292;
 pub const IPC_INFOBOX: UINT = 293;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct infoBoxParam {
     pub parent: HWND,
     pub filename: *mut wchar_t,
@@ -152,6 +159,7 @@ pub const IPC_SET_EXTENDED_FILE_INFO: UINT = 294;
 pub const IPC_WRITE_EXTENDED_FILE_INFO: UINT = 295;
 pub const IPC_FORMAT_TITLE: UINT = 297;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waFormatTitle {
     pub spec: *mut c_char,
     pub p: *mut c_void,
@@ -162,6 +170,7 @@ pub struct waFormatTitle {
 }
 pub const IPC_FORMAT_TITLE_EXTENDED: UINT = 298;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waFormatTitleExtended {
     pub filename: *const wchar_t,
     pub useExtendedInfo: c_int,
@@ -175,17 +184,20 @@ pub struct waFormatTitleExtended {
 
 pub const IPC_COPY_EXTENDED_FILE_INFO: UINT = 299;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct copyFileInfoStruct {
     pub source: *const c_char,
     pub dest: *const c_char,
 }
 pub const IPC_COPY_EXTENDED_FILE_INFOW: UINT = 1299;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct copyFileInfoStructW {
     pub source: *const wchar_t,
     pub dest: *const wchar_t,
 }
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct wa_inflate_struct {
     pub inflateReset: unsafe extern "C" fn(strm: *mut c_void) -> c_int,
     pub inflateInit_: unsafe extern "C" fn(
@@ -201,6 +213,7 @@ pub struct wa_inflate_struct {
 pub const IPC_GETUNCOMPRESSINTERFACE: UINT = 331;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct prefsDlgRec {
     pub hInst: HINSTANCE,
     pub dlgID: c_int,
@@ -212,6 +225,7 @@ pub struct prefsDlgRec {
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct prefsDlgRecW {
     pub hInst: HINSTANCE,
     pub dlgID: c_int,
@@ -279,6 +293,7 @@ pub unsafe fn GET_EMBED_GUID(state: *mut embedWindowState) -> GUID {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct embedWindowState {
     pub me: HWND,
     pub flags: c_int,
@@ -287,10 +302,44 @@ pub struct embedWindowState {
     pub extra_data: [c_int; 64],
 }
 
+impl Debug for embedWindowState {
+    fn fmt(&self, f: &mut Formatter) -> FmtResult {
+        let &Self {
+            me,
+            flags,
+            r,
+            user_ptr,
+            ref extra_data,
+        } = self;
+        emb_dbg::embedWindowState {
+            me,
+            flags,
+            r,
+            user_ptr,
+            extra_data,
+        }
+        .fmt(f)
+    }
+}
+
+mod emb_dbg {
+    use libc::*;
+    use winapi::shared::windef::*;
+    #[derive(Debug)]
+    pub struct embedWindowState<'a> {
+        pub me: HWND,
+        pub flags: c_int,
+        pub r: RECT,
+        pub user_ptr: *mut c_void,
+        pub extra_data: &'a [c_int],
+    }
+}
+
 pub const IPC_GET_EMBEDIF: UINT = 505;
 pub const IPC_SKINWINDOW: UINT = 534;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct __SKINWINDOWPARAM {
     pub hwndToSkin: HWND,
     pub windowGuid: GUID,
@@ -298,6 +347,7 @@ pub struct __SKINWINDOWPARAM {
 
 pub const IPC_EMBED_ENUM: UINT = 532;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct embedEnumStruct {
     pub enumProc:
         unsafe extern "C" fn(ws: *mut embedWindowState, param: *mut embedEnumStruct) -> c_int,
@@ -307,6 +357,7 @@ pub struct embedEnumStruct {
 pub const IPC_EMBED_ISVALID: UINT = 533;
 pub const IPC_CONVERTFILE: UINT = 506;
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct convertFileStruct {
     pub sourcefile: *mut c_char,
     pub destfile: *mut c_char,
@@ -319,8 +370,95 @@ pub struct convertFileStruct {
     pub killswitch: c_int,
     pub extra_data: [intptr_t; 64],
 }
+impl Debug for convertFileStruct {
+    fn fmt(&self, f: &mut Formatter) -> FmtResult {
+        let &Self {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            ref extra_data,
+        } = self;
+        dbg::convertFileStruct {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            extra_data,
+        }
+        .fmt(f)
+    }
+}
+
+impl PartialEq for convertFileStruct {
+    fn eq(&self, other: &Self) -> bool {
+        let &Self {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            ref extra_data,
+        } = self;
+        let s = dbg::convertFileStruct {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            extra_data,
+        };
+        let &Self {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            ref extra_data,
+        } = other;
+        let o = dbg::convertFileStruct {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            extra_data,
+        };
+        s == o
+    }
+}
+
+impl Eq for convertFileStruct {}
+
 pub const IPC_CONVERTFILEW: UINT = 515;
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct convertFileStructW {
     pub sourcefile: *mut wchar_t,
     pub destfile: *mut wchar_t,
@@ -333,9 +471,127 @@ pub struct convertFileStructW {
     pub killswitch: c_int,
     pub extra_data: [intptr_t; 64],
 }
+
+impl Eq for convertFileStructW {}
+
+impl Debug for convertFileStructW {
+    fn fmt(&self, f: &mut Formatter) -> FmtResult {
+        let &Self {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            ref extra_data,
+        } = self;
+        dbg::convertFileStructW {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            extra_data,
+        }
+        .fmt(f)
+    }
+}
+
+impl PartialEq for convertFileStructW {
+    fn eq(&self, other: &Self) -> bool {
+        let &Self {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            ref extra_data,
+        } = self;
+        let s = dbg::convertFileStructW {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            extra_data,
+        };
+        let &Self {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            ref extra_data,
+        } = other;
+        let o = dbg::convertFileStructW {
+            sourcefile,
+            destfile,
+            destformat,
+            callbackhwnd,
+            error,
+            bytes_done,
+            bytes_total,
+            bytes_out,
+            killswitch,
+            extra_data,
+        };
+        s == o
+    }
+}
+
+mod dbg {
+    use libc::*;
+    use winapi::shared::windef::*;
+    #[derive(Debug, PartialEq)]
+    pub(crate) struct convertFileStructW<'a> {
+        pub sourcefile: *mut wchar_t,
+        pub destfile: *mut wchar_t,
+        pub destformat: [intptr_t; 8],
+        pub callbackhwnd: HWND,
+        pub error: *mut wchar_t,
+        pub bytes_done: c_int,
+        pub bytes_total: c_int,
+        pub bytes_out: c_int,
+        pub killswitch: c_int,
+        pub extra_data: &'a [intptr_t],
+    }
+    #[derive(Debug, PartialEq)]
+    pub(crate) struct convertFileStruct<'a> {
+        pub sourcefile: *mut c_char,
+        pub destfile: *mut c_char,
+        pub destformat: [intptr_t; 8],
+        pub callbackhwnd: HWND,
+        pub error: *mut c_char,
+        pub bytes_done: c_int,
+        pub bytes_total: c_int,
+        pub bytes_out: c_int,
+        pub killswitch: c_int,
+        pub extra_data: &'a [intptr_t],
+    }
+}
 pub const IPC_CONVERTFILE_END: UINT = 507;
 pub const IPC_CONVERTFILEW_END: UINT = 516;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertConfigStruct {
     pub hwndParent: HWND,
     pub format: c_int,
@@ -346,11 +602,13 @@ pub struct convertConfigStruct {
 pub const IPC_CONVERT_CONFIG: UINT = 508;
 pub const IPC_CONVERT_CONFIG_END: UINT = 509;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct converterEnumFmtStruct {
     pub enumProc: unsafe extern "C" fn(user_data: intptr_t, desc: *const c_char, fourcc: c_int),
     pub user_data: intptr_t,
 }
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct burnCDStruct {
     pub cdletter: c_char,
     pub playlist_file: *mut c_char,
@@ -359,18 +617,21 @@ pub struct burnCDStruct {
 }
 pub const IPC_BURN_CD: UINT = 511;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertSetPriority {
     pub cfs: *mut convertFileStruct,
     pub priority: c_int,
 }
 pub const IPC_CONVERT_SET_PRIORITY: UINT = 512;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertsetPriorityW {
     pub cfs: *mut convertFileStructW,
     pub priority: c_int,
 }
 pub const IPC_CONVERT_SET_PRIORITYW: UINT = 517;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct convertConfigItem {
     pub format: c_uint,
     pub item: *mut c_char,
@@ -382,6 +643,7 @@ pub struct convertConfigItem {
 pub const IPC_CONVERT_CONFIG_SET_ITEM: UINT = 513;
 pub const IPC_CONVERT_CONFIG_GET_ITEM: UINT = 514;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waHookTitleStruct {
     pub filename: *const c_char,
     pub title: *mut c_char,
@@ -391,6 +653,7 @@ pub struct waHookTitleStruct {
 
 pub const IPC_HOOK_TITLES: UINT = 850;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waHookTitleStructW {
     pub filename: *const wchar_t,
     pub title: *mut wchar_t,
@@ -407,6 +670,7 @@ pub const IPC_GETVUDATAFUNC: UINT = 801;
 pub const IPC_ISMAINWNDVISIBLE: UINT = 900;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waSetPlColorsStruct {
     pub numElems: c_int,
     pub elems: *mut c_int,
@@ -415,12 +679,14 @@ pub struct waSetPlColorsStruct {
 
 pub const IPC_SETPLEDITCOLORS: UINT = 920;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waSpawnMenuParms {
     pub wnd: HWND,
     pub xpos: c_int,
     pub ypos: c_int,
 }
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct waSpawnMenuParms2 {
     pub wnd: HWND,
     pub xpos: c_int,
@@ -463,6 +729,7 @@ pub const VIDUSER_GETPOPUPMENU: UINT = 0x1006;
 pub const VIDUSER_SET_INFOSTRINGW: UINT = 0x1007;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct VideoOpenStruct {
     pub w: c_int,
     pub h: c_int,
@@ -524,6 +791,7 @@ pub const IPC_GETSTOPONVIDEOCLOSE: UINT = 615;
 pub const IPC_SETSTOPONVIDEOCLOSE: UINT = 616;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct transAccelStruct {
     pub hwnd: HWND,
     pub uMsg: c_int,
@@ -533,6 +801,7 @@ pub struct transAccelStruct {
 
 pub const IPC_TRANSLATEACCELERATOR: UINT = 617;
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct windowCommand {
     pub cmd: c_int,
     pub x: c_int,
@@ -686,6 +955,7 @@ pub const IPC_GET_UNIQUE_DISPATCH_ID: UINT = 3021;
 pub const IPC_ADD_DISPATCH_OBJECT: UINT = 3022;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct DispatchInfo {
     pub name: *mut wchar_t,
     pub dispatch: *mut (),
@@ -698,6 +968,7 @@ pub const IPC_USE_REGISTRY: UINT = 3024;
 pub const IPC_GET_API_SERVICE: UINT = 3025;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct extendedFileInfoStructW {
     pub filename: *const wchar_t,
     pub metadata: *const wchar_t,
@@ -729,6 +1000,7 @@ pub const IPC_GET_PLAYING_TITLE: UINT = 3034;
 pub const IPC_CANPLAY: UINT = 3035;
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct artFetchData {
     pub size: size_t,
     pub parent: HWND,
