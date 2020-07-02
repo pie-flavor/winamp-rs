@@ -63,7 +63,7 @@ pub struct In_Module {
     ) -> c_int,
     pub EQSet: unsafe extern "C" fn(on: c_int, data: *mut c_char, preamp: c_int),
     pub SetInfo: unsafe extern "C" fn(bitrate: c_int, srate: c_int, stereo: c_int, synched: c_int),
-    pub outMod: *mut crate::OUT::Out_Module,
+    pub outMod: *mut crate::out::Out_Module,
 }
 
 pub const IN_PLUGIN_UNINSTALL_NOW: c_int = 0x1;
